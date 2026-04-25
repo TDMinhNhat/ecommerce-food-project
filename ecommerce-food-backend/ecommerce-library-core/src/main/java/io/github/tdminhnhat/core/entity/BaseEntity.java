@@ -1,9 +1,6 @@
 package io.github.tdminhnhat.core.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +12,13 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
 @MappedSuperclass
 @FieldDefaults(level = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Getter @Setter
 @NoArgsConstructor
 @DynamicInsert @DynamicUpdate

@@ -1,21 +1,27 @@
 package io.github.tdminhnhat.core.service;
 
+import io.github.tdminhnhat.core.entity.BaseEntity;
 import io.github.tdminhnhat.core.model.dto.Filter;
+import io.github.tdminhnhat.core.model.vo.BaseVo;
+import io.github.tdminhnhat.core.model.vo.PageVo;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IService<S extends Record, P extends Number> {
 
-    Object save(S request);
+    <R extends BaseVo> R save(S request) throws Exception;
 
-    Object update(P id, S request);
+    <R extends BaseVo> R update(P id, S request) throws Exception;
 
-    Object delete(P id);
+    <R extends BaseVo> R delete(P id) throws Exception;
 
-    Optional<Object> findById(P id);
+    <R extends BaseVo> R findById(P id);
 
-    List<Object> findAll();
+    <R extends BaseVo> List<R> findAll();
 
-    <T extends Filter> List<Object> findAll(T filter);
+    default <R extends BaseVo, T extends Filter> PageVo<R> findAll(T filter) {
+        return null;
+    }
+
+    <R extends BaseVo> R getVo(BaseEntity entity) throws Exception;
 }

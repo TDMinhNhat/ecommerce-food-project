@@ -1,3 +1,4 @@
 rootProject.name = 'ecommerce-food-backend'
 
 include("ecommerce-library-core")
+include("product-service")

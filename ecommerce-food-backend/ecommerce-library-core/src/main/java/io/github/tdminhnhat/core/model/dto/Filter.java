@@ -1,6 +1,5 @@
 package io.github.tdminhnhat.core.model.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;

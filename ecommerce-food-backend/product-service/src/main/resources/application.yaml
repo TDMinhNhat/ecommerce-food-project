@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: product-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST:dell}:${POSTGRES_PORT:5432}/${POSTGRES_DB:ecommerce-food-product-service}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:123456789}
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://${POSTGRES_HOST:dell}:${POSTGRES_PORT:5432}/${POSTGRES_DB:ecommerce-food-product-service}
+    user: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:123456789}
+    connect-retries: 10
+    validate-on-migrate: true
+    validate-migration-naming: true
+    connect-retries-interval: 300
+server:
+  port: ${SERVER_PORT:12001}
+  servlet:
+    context-path: /product
+  api:
+    attribute: /api/v1/attributes
+    attribute-group: /api/v1/attribute-groups
+    attribute-group-item: /api/v1/attribute-group-items
+    product-category: /api/v1/product-categories
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+minio:
+  endpoint: http://${MINIO_HOST:dell}:${MINIO_PORT:9000}
+  bucket-name: ${MINIO_BUCKET_NAME:ecommerce-food-product-service}
+  access-key: ${MINIO_ACCESS_KEY:admin}
+  secret-key: ${MINIO_SECRET_KEY:123456789}

@@ -17,7 +17,7 @@ import java.io.IOException;
 public class FileActionUtil {
 
     @NonFinal
-    @Value("${minio.bucket}")
+    @Value("${minio.bucket-name}")
     String bucketName;
 
     MinioClient minioClient;
