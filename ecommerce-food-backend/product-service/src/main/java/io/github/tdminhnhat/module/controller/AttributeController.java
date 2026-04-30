@@ -25,6 +25,11 @@ public class AttributeController {
         return ResponseEntity.ok(attributeService.save(request));
     }
 
+    @PostMapping("/list")
+    public ResponseEntity<List<AttributeVo>> addList(@Valid @RequestBody List<AttributeDto> request) throws Exception {
+        return ResponseEntity.ok(attributeService.saveList(request));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<AttributeVo> update(@PathVariable Long id, @Valid @RequestBody AttributeDto request) throws Exception {
         return ResponseEntity.ok(attributeService.update(id, request));

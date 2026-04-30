@@ -7,15 +7,12 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Entity @Table(name = "attribute_groups")
+@Entity @Table(name = "attribute_types")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 @NoArgsConstructor @RequiredArgsConstructor
-public class AttributeGroup extends BaseEntity {
+public class AttributeType extends BaseEntity {
 
-    @Column(name = "group_name", length = 150, nullable = false, unique = true) @NonNull
-    String groupName;
-
-    @Column(name = "group_type", length = 100, nullable = false, unique = true) @NonNull
-    String groupType;
+    @Column(name = "type_name", length = 100, nullable = false, unique = true) @NonNull
+    String typeName;
 }

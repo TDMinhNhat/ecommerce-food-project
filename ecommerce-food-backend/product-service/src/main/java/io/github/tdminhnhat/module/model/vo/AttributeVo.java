@@ -9,9 +9,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor @AllArgsConstructor
 public class AttributeVo extends BaseVo {
 
-    String attributeId;
-
     String attributeName;
 
     String description;
+
+    AttributeTypeVo attributeType;
 }

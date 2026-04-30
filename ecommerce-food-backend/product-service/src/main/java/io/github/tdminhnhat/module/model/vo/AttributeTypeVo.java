@@ -5,11 +5,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class AttributeGroupVo extends BaseVo {
+public class AttributeTypeVo extends BaseVo {
 
-    String groupName;
-
-    String groupType;
+    String typeName;
 }

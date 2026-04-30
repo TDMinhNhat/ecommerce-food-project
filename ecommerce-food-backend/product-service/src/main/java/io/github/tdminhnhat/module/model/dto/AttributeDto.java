@@ -1,6 +1,7 @@
 package io.github.tdminhnhat.module.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -12,6 +13,9 @@ public record AttributeDto(
 
         String description,
 
-        String note
+        String note,
+
+        @NotNull(message = "can not be null or empty")
+        AttributeTypeDto attributeType
 ) {
 }

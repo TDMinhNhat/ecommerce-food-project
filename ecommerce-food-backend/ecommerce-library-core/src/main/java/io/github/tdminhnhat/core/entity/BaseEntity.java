@@ -24,7 +24,7 @@ import java.time.Instant;
 @DynamicInsert @DynamicUpdate
 public abstract class BaseEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     @Column(name = "note")

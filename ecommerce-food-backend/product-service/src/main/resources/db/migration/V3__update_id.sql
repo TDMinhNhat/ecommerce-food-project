@@ -1,0 +1,13 @@
+-- Version 3: Add the generation identity into the column id for each table
+
+ALTER TABLE attribute_groups
+ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+
+ALTER TABLE attributes
+ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+
+ALTER TABLE attribute_group_items
+ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+
+ALTER TABLE product_categories
+ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;

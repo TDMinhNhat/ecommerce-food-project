@@ -7,10 +7,13 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -33,16 +36,30 @@ public class FileActionUtil {
         }
     }
 
-    public String upload(MultipartFile file, String objectName) throws MinioException, IOException {
-        minioClient.putObject(PutObjectArgs.builder().stream(file.getInputStream(), file.getSize(), -1L).build());
-        return getUrlFile(objectName);
+    public void upload(MultipartFile file, String objectName) throws MinioException, IOException {
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                .bucket(this.bucketName).object(objectName)
+                .stream(file.getInputStream(), (long) file.getInputStream().available(), -1L)
+                .contentType(file.getContentType())
+                .build();
+        minioClient.putObject(putObjectArgs);
     }
 
     public void delete(String objectName) throws MinioException {
-        minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
+        RemoveObjectArgs removeObjectArgs = RemoveObjectArgs.builder()
+                .bucket(this.bucketName)
+                .object(objectName)
+                .build();
+        minioClient.removeObject(removeObjectArgs);
     }
 
     public String getUrlFile(String objectName) throws MinioException {
-        return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().bucket(bucketName).object(objectName).build());
+        GetPresignedObjectUrlArgs getPresignedObjectUrlArgs = GetPresignedObjectUrlArgs.builder()
+                .bucket(this.bucketName)
+                .object(objectName)
+                .expiry(24, TimeUnit.HOURS)
+                .method(Http.Method.GET)
+                .build();
+        return minioClient.getPresignedObjectUrl(getPresignedObjectUrlArgs);
     }
 }

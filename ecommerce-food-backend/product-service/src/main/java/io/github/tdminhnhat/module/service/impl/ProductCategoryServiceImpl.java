@@ -2,8 +2,6 @@ package io.github.tdminhnhat.module.service.impl;
 
 import io.github.tdminhnhat.core.entity.BaseEntity;
 import io.github.tdminhnhat.core.exception.FileContentException;
-import io.github.tdminhnhat.core.model.dto.Filter;
-import io.github.tdminhnhat.core.model.vo.BaseVo;
 import io.github.tdminhnhat.core.util.FileActionUtil;
 import io.github.tdminhnhat.core.util.FileValidationUtil;
 import io.github.tdminhnhat.module.entity.ProductCategory;
@@ -18,12 +16,14 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -50,6 +50,32 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
             return getVo(productCategoryRepository.save(productCategory));
         } catch (MinioException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackOn = RuntimeException.class)
+    public List<ProductCategoryVo> addList(List<ProductCategoryDto> request) throws Exception {
+        return request.stream().map(item -> {
+            try {
+                return this.save(item);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }).toList();
+    }
+
+    @Override
+    @Transactional(rollbackOn = RuntimeException.class)
+    public ProductCategoryVo saveWithImage(ProductCategoryDto request, MultipartFile file) {
+        try {
+            ProductCategoryVo productCategoryVo = this.save(request);
+            if(file != null && FileValidationUtil.validateImageFile(file)) {
+                return this.uploadOrUpdateFile(file, productCategoryVo.getId());
+            }
+            return productCategoryVo;
+        } catch (FileContentException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -124,6 +150,17 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         } catch (MinioException | IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    @Transactional(rollbackOn = Exception.class)
+    public List<ProductCategoryVo> uploadOrUpdateFiles(List<Long> ids, List<MultipartFile> files) throws BadRequestException {
+        if(ids.size() != files.size()) {
+            throw new BadRequestException("The list id and file are not same size");
+        }
+
+        AtomicInteger index = new AtomicInteger(0);
+        return ids.stream().map(id -> this.uploadOrUpdateFile(files.get(index.getAndIncrement()), id)).toList();
     }
 
     @Override

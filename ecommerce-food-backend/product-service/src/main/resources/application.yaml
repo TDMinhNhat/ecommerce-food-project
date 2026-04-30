@@ -28,8 +28,8 @@ server:
     context-path: /product
   api:
     attribute: /api/v1/attributes
-    attribute-group: /api/v1/attribute-groups
-    attribute-group-item: /api/v1/attribute-group-items
+
+
     product-category: /api/v1/product-categories
 springdoc:
   swagger-ui:
