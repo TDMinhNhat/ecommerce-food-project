@@ -17,16 +17,16 @@ pipeline {
 
         // Build Backend Modules
         stage("Build Modules") {
-            dir("ecommerce-food-backend") {
                 when {
-                            branch 'backend'
+                    branch 'backend'
                 }
-                steps {
-                            pwd
-                            echo 'Building backend modules'
-                            sh './gradlew clean build'
-                }
-            }
+                dir("ecommerce-food-backend") {
+					steps {
+						pwd
+						echo 'Building backend modules'
+						sh './gradlew clean build'
+					}
+				}
         }
 
         // Build image and deploy them into docker
