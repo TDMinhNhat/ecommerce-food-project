@@ -33,7 +33,7 @@ pipeline {
         // Build image and deploy them into docker
         stage("Deployment") {
             steps {
-                sh 'docker build up -d'
+                sh 'docker compose up -d --build'
             }
         }
     }
