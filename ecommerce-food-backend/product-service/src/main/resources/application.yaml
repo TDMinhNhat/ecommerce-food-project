@@ -28,14 +28,15 @@ server:
     context-path: /product
   api:
     attribute: /api/v1/attributes
-
-
+    product: /api/v1/products
     product-category: /api/v1/product-categories
+    product-media: /api/v1/product-medias
+    product-sku: /api/v1/product-skues
 springdoc:
   swagger-ui:
-    enabled: true
+    enabled: ${SWAGGER_UI_STATUS:true}
   api-docs:
-    enabled: true
+    enabled: ${API_DOCS_STATUS:true}
 minio:
   endpoint: http://${MINIO_HOST:dell}:${MINIO_PORT:9000}
   bucket-name: ${MINIO_BUCKET_NAME:ecommerce-food-product-service}

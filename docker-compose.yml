@@ -1,0 +1,31 @@
+name: ecommerce-food-project
+services:
+  product_service:
+    container_name: product_service
+    build:
+      dockerfile: ./product-service
+    ports:
+      - "12001:12001"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ecommmerce-food-product-service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456789
+      SERVER_PORT: 12001
+      SWAGGER_UI_STATUS: true
+      API_DOCS_STATUS: true
+      MINIO_HOST: minio
+      MINIO_PORT: 9000
+      MINIO_BUCKET_NAME: ecommerce-food-product-service
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: 123456789
+    networks:
+      - ubuntu-service_ubuntu_network
+      - ecommerce-food-project-network
+    cpus: 1
+    mem_limit: 1024
+
+networks:
+  ecommerce-food-project-network:
+    driver: bridge

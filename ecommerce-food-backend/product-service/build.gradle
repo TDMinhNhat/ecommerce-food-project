@@ -54,6 +54,11 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
+bootJar {
+    enabled = true
+    mainClass = 'io.github.tdminhnhat.module.ProductServiceApplication'
+}
+
 dependencyManagement {
     imports {
         mavenBom "org.springframework.grpc:spring-grpc-dependencies:${springGrpcVersion}"

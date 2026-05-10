@@ -33,3 +33,11 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
