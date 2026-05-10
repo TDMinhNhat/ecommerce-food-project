@@ -27,5 +27,7 @@ services:
     mem_limit: 1024
 
 networks:
+  ubuntu_network:
+    external: true
   ecommerce-food-project-network:
     driver: bridge
