@@ -22,7 +22,7 @@ pipeline {
                 }
 				steps {
 				    dir("ecommerce-food-backend") {
-						pwd
+						sh 'pwd'
 						echo 'Building backend modules'
 						sh './gradlew clean build'
 					}
